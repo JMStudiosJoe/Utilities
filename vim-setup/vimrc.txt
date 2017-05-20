@@ -1,0 +1,155 @@
+set number
+set ruler
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set smartindent
+set cursorline
+set backspace=2
+set undofile
+set undodir=$HOME/.vim/undo
+set undolevels=1000
+set undoreload=100000
+set mouse=a
+
+" alt-space to exit insert mode
+imap <M-Space> <Esc>
+
+" colorscheme monokai
+" highlight Comment cterm=bold
+
+set nocompatible "be iMproved
+filetype off " necessary to make sure vundle does something
+set modelines=0 "security hole involving modelines
+
+syntax enable
+
+" General Options
+" -------------------------------------
+" automatically set up vundle and install all bundles if vundle is not installed
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+	echo "Installing Vundle.."
+	echo ""
+	silent !mkdir -p ~/.vim/bundle
+	silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+	let iCanHazVundle=0
+endif
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'vim-scripts/SearchComplete'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'kien/ctrlp.vim'
+Plugin 'myusuf3/numbers.vim'
+Plugin 'altercation/vim-colors-solarized'
+"Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sleuth'
+"Plugin 'tomtom/tcomment_vim'
+Plugin 'wincent/command-t'
+Plugin 'vim-scripts/st.vim'
+Plugin 'Lokaltog/vim-easymotion'
+"Plugin 'terryma/vim-expand-region'
+"Plugin 'chase/vim-ansible-yaml'
+Plugin 'scrooloose/nerdcommenter'
+"Plugin 'jiangmiao/auto-pairs'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'ingydotnet/yaml-vim'
+"Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'bling/vim-bufferline'
+"Plugin 'vim-scripts/st.vim'
+Plugin 'jelera/vim-javascript-syntax'
+" javascript / react
+Plugin 'pangloss/vim-javascript'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'chemzqm/vim-jsx-improve'
+Plugin 'quramy/tsuquyomi'
+Plugin 'mxw/vim-jsx'
+call vundle#end()	    " required
+filetype plugin indent on   " required
+
+"The following three lines map Ctrl+s to save in vi.  You can comment
+""these out, it has nothing to do with syntax highlighting or colors.
+
+" optional lines to turn on pressing F2 to toggle paste mode
+" noremap <F2> :set invpaste paste?<CR>i
+" set pastetoggle=<F2>
+"
+"
+" :nmap <c-s> :w<CR>
+" :imap <c-s> <Esc>:w<CR>a
+" :imap <c-s> <Esc><c-s>
+"
+" set background=dark
+" set hlsearch
+" set nu
+" filetype on
+" filetype plugin indent on
+"
+" au BufReadPost *.twig colorscheme koehler
+" au BufReadPost *.css colorscheme slate
+" au BufReadPost *.js colorscheme slate2
+" au BufReadPost *.py colorscheme molokaiyo
+" au BufReadPost *.html colorscheme monokai
+" au BufReadPost *.java colorscheme monokai
+" " au BufReadPost *.php colorscheme monokai
+"
+" " Default line highlighting for unknown filetypes
+hi String ctermfg=140
+hi CursorLine ctermbg=235
+" hi CursorLine guibg=#D3D3D3 cterm=none
+
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+
+au BufRead,BufNewFile *.ts   set filetype=typescript
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code
+" indentation
+let g:NERDDefaultAlign = 'left'
+
+" Open/close NerdTree with ctrl-n
+map <C-n> :NERDTreeToggle<CR>
+
+" Close vim if the only window left open is a NerdTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Give different filetypes different highlighting in NerdTree
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+" Change expandable/collapsible symbols in NerdTree
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '-'
+
+"start nerd tree automatically when vim starts
+
+" How to map caps lock to esc
+" http://stackoverflow.com/questions/127591/using-caps-lock-as-esc-in-mac-os-x
