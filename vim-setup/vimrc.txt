@@ -64,6 +64,7 @@ Plugin 'bling/vim-bufferline'
 "Plugin 'vim-scripts/st.vim'
 Plugin 'jelera/vim-javascript-syntax'
 " javascript / react
+Plugin 'Shougo/vimproc.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'leafgarland/typescript-vim'
@@ -71,6 +72,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'chemzqm/vim-jsx-improve'
 Plugin 'quramy/tsuquyomi'
+Plugin 'ianks/vim-tsx'
+Plugin 'peitalin/vim-jsx-typescript'
 Plugin 'mxw/vim-jsx'
 call vundle#end()	    " required
 filetype plugin indent on   " required
@@ -104,6 +107,17 @@ filetype plugin indent on   " required
 " " Default line highlighting for unknown filetypes
 hi String ctermfg=140
 hi CursorLine ctermbg=235
+
+" set filetypes as typescript.jsx
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
+
+" light blues
+hi xmlTagName guifg=#59ACE5
+hi xmlTag guifg=#59ACE5
+
+" dark blues
+hi xmlEndTag guifg=#2974a1
+
 " hi CursorLine guibg=#D3D3D3 cterm=none
 
 autocmd BufReadPost *
